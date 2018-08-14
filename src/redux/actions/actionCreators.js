@@ -14,9 +14,10 @@ export const addComment = (postCode, user, text) => {
   }
 }
 
-export const deleteComment = (commentIndex) => {
+export const deleteComment = (postCode, commentIndex) => {
   return {
     type: "DELETE_COMMENT",
-    commentIndex
+    commentIndex,
+    postCode
   }
 }

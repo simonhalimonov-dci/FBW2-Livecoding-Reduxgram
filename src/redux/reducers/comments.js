@@ -12,6 +12,10 @@ const commentsReducer = (state={}, action) => {
       // Replace the old comment array with our new one
       newState[postCode] = newComments
       return newState;
+    case "DELETE_COMMENT":
+      const newCommentsList = [...state[action.postCode].filter((comment, i) => i != action.commentIndex)]
+      const newStateDOG = {... state, [action.postCode]: newCommentsList}
+      return newStateDOG;
     default:
       return state;
   }

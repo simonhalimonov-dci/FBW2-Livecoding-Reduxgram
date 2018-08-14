@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
 
 // import our actionCreators
-import { likePost, addComment } from '../redux/actions/actionCreators'
+import { likePost, addComment, deleteComment } from '../redux/actions/actionCreators'
 
 class Single extends React.Component {
   handleSubmit = e => {
@@ -15,6 +15,10 @@ class Single extends React.Component {
     this.props.addComment(code, this.refs.commentAuthor.value, this.refs.commentText.value)
     // Reset the input after we have dispatched the action
     this.refs.commentForm.reset()
+  }
+
+  handleClickComment = index => {
+    this.deleteComment(index)
   }
 
   render() {
@@ -45,7 +49,7 @@ class Single extends React.Component {
           {this.props.comments[code] &&
             this.props.comments[post.code].map((comment, i) => {
               return (
-                <div key={i}>
+                <div onClick={() => this.props.deleteComment(code, i)} key={i}>
                   <b>{comment.user}</b> {comment.text}
                 </div>
               );
@@ -65,6 +69,6 @@ const mapStateToProps = state => {
   return { posts: state.posts, comments: state.comments };
 };
 // This binds the actionCreators functions with the component and the store
-const mapDispatchToProps = dispatch => bindActionCreators( {likePost, addComment}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators( {likePost, addComment, deleteComment}, dispatch)
 // The connect is like the glue between the React application and the Redux store. It gets the state from the store and passes the data to the props of the component. And it dispatches the actions from the component to the reducer in the store.
 export default connect(mapStateToProps, mapDispatchToProps)(Single);
